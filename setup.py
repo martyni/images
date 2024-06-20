@@ -11,11 +11,11 @@ import os
 from setuptools import setup, find_packages
 
 # Meta information
-version = open('run/VERSION').read().strip()
-name    = open('run/NAME').read().strip()
+version = open('scripts/VERSION').read().strip()
+name    = open('scripts/NAME').read().strip()
 author  = 'martyn pratt'
 author_email = 'martynjamespratt@gmail.com'
-description  = open('DESCRIPTION').read().strip()
+description  = open('scripts/DESCRIPTION').read().strip()
 dirname = os.path.dirname(__file__)
 
 # Save version and author to __meta__.py
@@ -26,6 +26,9 @@ __author__ = u'F\\xemartyn\\xepratt'
 ''' % version
 with open(path, 'wb') as F:
     F.write(data.encode())
+
+with open('requirements.txt') as reqs:
+   requirements = reqs.readlines()
     
 setup(
     # Basic info
@@ -48,8 +51,7 @@ setup(
     # Packages and depencies
     package_dir={'': 'src'},
     packages=find_packages('src'),
-    install_requires=[
-    ],
+    install_requires=requirements,
     extras_require={
         'dev': [
             'pytest',
