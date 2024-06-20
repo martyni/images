@@ -11,11 +11,11 @@ import os
 from setuptools import setup, find_packages
 
 # Meta information
-version = open('run/VERSION').read().strip()
-name    = open('run/NAME').read().strip()
+version = open('scripts/VERSION').read().strip()
+name    = open('scripts/NAME').read().strip()
 author  = 'martyn pratt'
 author_email = 'martynjamespratt@gmail.com'
-description  = open('DESCRIPTION').read().strip()
+description  = open('scripts/DESCRIPTION').read().strip()
 dirname = os.path.dirname(__file__)
 
 # Save version and author to __meta__.py
