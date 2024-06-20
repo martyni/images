@@ -26,6 +26,9 @@ __author__ = u'F\\xemartyn\\xepratt'
 ''' % version
 with open(path, 'wb') as F:
     F.write(data.encode())
+
+with open('requirements.txt') as reqs:
+   requirements = reqs.readlines()
     
 setup(
     # Basic info
@@ -48,8 +51,7 @@ setup(
     # Packages and depencies
     package_dir={'': 'src'},
     packages=find_packages('src'),
-    install_requires=[
-    ],
+    install_requires=requirements,
     extras_require={
         'dev': [
             'pytest',
