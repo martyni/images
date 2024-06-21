@@ -12,10 +12,10 @@ from setuptools import setup, find_packages
 
 # Meta information
 version = open('scripts/VERSION').read().strip()
-name    = open('scripts/NAME').read().strip()
-author  = 'martyn pratt'
+name = open('scripts/NAME').read().strip()
+author = 'martyn pratt'
 author_email = 'martynjamespratt@gmail.com'
-description  = open('scripts/DESCRIPTION').read().strip()
+description = open('scripts/DESCRIPTION').read().strip()
 dirname = os.path.dirname(__file__)
 
 # Save version and author to __meta__.py
@@ -28,8 +28,8 @@ with open(path, 'wb') as F:
     F.write(data.encode())
 
 with open('requirements.txt') as reqs:
-   requirements = reqs.readlines()
-    
+    requirements = reqs.readlines()
+
 setup(
     # Basic info
     name=name,
@@ -55,6 +55,7 @@ setup(
     extras_require={
         'dev': [
             'pytest',
+            'autopep8',
         ],
     },
 
