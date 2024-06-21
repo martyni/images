@@ -1,44 +1,47 @@
-# -*- coding: utf8 -*-
-#
-# This file were created by Python Boilerplate. Use Python Boilerplate to start
-# simple, usable and best-practices compliant Python projects.
-#
-# Learn more about it at: http://github.com/fabiommendes/python-boilerplate/
-#
+''' -*- coding: utf8 -*-
+
+ This file were created by Python Boilerplate. Use Python Boilerplate to start
+ simple, usable and best-practices compliant Python projects.
+
+ Learn more about it at: http://github.com/fabiommendes/python-boilerplate/
+'''
 
 import os
 
 from setuptools import setup, find_packages
 
 # Meta information
-version = open('scripts/VERSION').read().strip()
-name = open('scripts/NAME').read().strip()
-author = 'martyn pratt'
-author_email = 'martynjamespratt@gmail.com'
-description = open('scripts/DESCRIPTION').read().strip()
+
+meta_dict = {}
+for each in ['version', 'name', 'description', 'author', 'author_email']:
+    with open(f'scripts/{each.upper()}', encoding="utf-8") as f:
+        meta_dict[each] = f.read().strip()
+
 dirname = os.path.dirname(__file__)
 
 # Save version and author to __meta__.py
 path = os.path.join(dirname, '__meta__.py')
-data = '''# Automatically created. Please do not edit.
-__version__ = u'%s'
-__author__ = u'F\\xemartyn\\xepratt'
-''' % version
-with open(path, 'wb') as F:
+data = f'''# Automatically created. Please do not edit.
+__version__ = u'{meta_dict['version']}'
+__author__ = u'{meta_dict['author']}'
+'''
+with open(path, 'wb', encoding="utf-8") as F:
     F.write(data.encode())
+with open('README.md', encoding="utf-8") as readme:
+    long_description = readme.read()
 
-with open('requirements.txt') as reqs:
+with open('requirements.txt', encoding="utf-8") as reqs:
     requirements = reqs.readlines()
 
 setup(
     # Basic info
-    name=name,
-    version=version,
-    author=author,
-    author_email=author_email,
-    url='https://github.com/martyni/' + name,
-    description=description,
-    long_description=open('README.md').read(),
+    name=meta_dict['name'],
+    version=meta_dict['version'],
+    author=meta_dict['author'],
+    author_email=meta_dict['author_email'],
+    url='https://github.com/martyni/' + meta_dict['name'],
+    description=meta_dict['description'],
+    long_description=long_description,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -56,6 +59,8 @@ setup(
         'dev': [
             'pytest',
             'autopep8',
+            'pylint',
+            'setuptools',
         ],
     },
 
@@ -69,7 +74,7 @@ setup(
     # Scripts
     entry_points={
         'console_scripts': [
-            name + ' = my_app.app:main'],
+            meta_dict['name'] + ' = my_app.app:main'],
     },
 
     # Other configurations
