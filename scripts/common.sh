@@ -1,5 +1,5 @@
 if [[ -z $(which unbuffer) ]]; then
-    echo Running in a pipeline and don\'t set Colour text variables
+    echo Running in a pipeline Colour not set
     PIPELINE=1
 else
     echo Running locally setting Colour Variables
