@@ -25,7 +25,7 @@ data = f'''# Automatically created. Please do not edit.
 __version__ = u'{meta_dict['version']}'
 __author__ = u'{meta_dict['author']}'
 '''
-with open(path, 'wb', encoding="utf-8") as F:
+with open(path, 'wb') as F:
     F.write(data.encode())
 with open('README.md', encoding="utf-8") as readme:
     long_description = readme.read()
@@ -60,7 +60,7 @@ setup(
             'pytest',
             'autopep8',
             'pylint',
-            'setuptools',
+            'setuptools'
         ],
     },
 
