@@ -13,6 +13,12 @@ python_test () {
   pytest
 }
 
+python_test () {
+  CURRENT_TEST=Linting
+  echo ${YELLOW} Starting Linting Test ${NO_COLOUR}
+  pylint $(git ls-files '*.py')
+}
+
 build_test () {
   CURRENT_TEST=Build
   echo ${YELLOW} Starting Build Test ${NO_COLOUR} in $(pwd)
