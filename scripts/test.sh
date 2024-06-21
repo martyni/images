@@ -28,7 +28,8 @@ build_test () {
 run_test () {
   CURRENT_TEST=Run
   echo ${YELLOW} Starting Run Test ${NO_COLOUR}
-  ${RUN_DIR}/run.sh | tee $OUTPUT_FILE && (grep hi ${OUTPUT_FILE} && echo ${GREEN}Success${NO_COLOUR=} ) || (echo ${RED}Fail${NO_COLOUR} && exit 1)
+  ${RUN_DIR}/run.sh &> $OUTPUT_FILE 
+  (grep hi ${OUTPUT_FILE} && echo ${GREEN}Success${NO_COLOUR=} ) || (echo ${RED}Fail${NO_COLOUR} && exit 1)
 }
 
 all_tests_pass () {

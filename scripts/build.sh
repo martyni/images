@@ -14,5 +14,5 @@ else
 fi
 
 echo docker run $NAME:$VERSION
-echo -n exiting $(cat ${BUILD_EXIT_FILE})
+echo exiting $(cat ${BUILD_EXIT_FILE})
 exit $(cat $BUILD_EXIT_FILE)
