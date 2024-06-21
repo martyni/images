@@ -13,7 +13,7 @@ python_test () {
   pytest
 }
 
-python_test () {
+linting_test () {
   CURRENT_TEST=Linting
   echo ${YELLOW} Starting Linting Test ${NO_COLOUR}
   pylint $(git ls-files '*.py')
@@ -43,4 +43,4 @@ test_failed () {
   exit 1
 }
 
-python_test && build_test && run_test  && all_tests_pass || test_failed
+python_test && linting_test && build_test && run_test  && all_tests_pass || test_failed
