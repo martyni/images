@@ -6,6 +6,9 @@ on:
       - 'scripts/**'
     branches:
       - main
+    permissions:
+      contents: read
+      issues: write
       
 
 jobs:
