@@ -7,6 +7,12 @@ source $(git rev-parse --show-toplevel)/scripts/common.sh
 
 echo ${YELLOW}Running tests from  ${RUN_DIR}${NO_COLOUR}
 
+python_install () {
+  CURRENT_TEST=python_install
+  echo ${YELLOW} Starting Python Install ${NO_COLOUR}
+  pip install .
+}
+
 python_test () {
   CURRENT_TEST=Python
   echo ${YELLOW} Starting Python Test ${NO_COLOUR}
@@ -44,4 +50,4 @@ test_failed () {
   exit 1
 }
 
-python_test && linting_test && build_test && run_test  && all_tests_pass || test_failed
+python_install && python_test && linting_test && build_test && run_test  && all_tests_pass || test_failed
