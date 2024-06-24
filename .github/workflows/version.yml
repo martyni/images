@@ -1,25 +1,31 @@
-name: Increment Minor Version
+name: Tests
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  increment-version:
+  build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Increment minor version
-      uses: codacy/git-version@v2.7.1
-      with:
-        increment: 'minor'
-      
-    - name: Commit and push version increment
+    - name: Version code
+      uses: actions/setup-python@v3
+    - name: Install dependencies
       run: |
-        git config --global user.name $(cat script/AUTHOR)
-        git config --global user.email $(cat script/EMAIL)
+        python -m pip install --upgrade pip
+        pip install '.[dev]'
+    - name: Update patch version
+      run: |
+        ./scripts/update_patch.py git-version
+    - name: Git add and tag code
+      run: |
+        export VERSION=$(cat git-version)
+        export MESSAGE=$(git log -1 --pretty=%B)
+        export AUTHOR=$(cat script/AUTHOR)
+        export AUTHOR_EMAIL=$(cat script/EMAIL)
+        git config --global user.name ${AUTHOR}
+        git config --global user.email ${AUTHOR_EMAIL}
         git add git-version
-        git commit -am "Up minor version"
+        git commit -am "Up version ${VERSION}"
+        git tag -a "v${VERSION}" -m "${MESSAGE}"
         git push origin main
+         

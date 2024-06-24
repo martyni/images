@@ -60,7 +60,8 @@ setup(
             'pytest',
             'autopep8',
             'pylint',
-            'setuptools'
+            'setuptools',
+            'semantic-version'
         ],
     },
 
