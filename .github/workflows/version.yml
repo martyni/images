@@ -3,7 +3,7 @@ name: Version
 on:
   push:
     paths-ignore:
-      - 'scripts/**'
+      - 'scripts/VERSION'
     branches:
       - main
     permissions:
@@ -24,7 +24,7 @@ jobs:
         pip install '.[dev]'
     - name: Update patch version
       run: |
-        ./scripts/update_patch.py git-version
+        ./scripts/update.py git-version patch 
     - name: Git add and tag code
       run: |
         export VERSION=$(cat git-version)
@@ -37,4 +37,5 @@ jobs:
         git commit -am "Up version ${VERSION}"
         git tag -a "v${VERSION}" -m "${MESSAGE}"
         git push origin main
+        git push origin tag "v${VERSION}"
          
