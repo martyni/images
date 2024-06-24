@@ -1,6 +1,12 @@
 name: Tests
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'scripts/**'
+    branches:
+      - main
+      
 
 jobs:
   build:
