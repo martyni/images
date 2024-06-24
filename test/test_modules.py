@@ -40,8 +40,7 @@ def test_module_imports():
             submod = submod.split('.py')[0]
             exec(f'import {mod}.{submod}')
             SUBMODULES.append(f'{mod}_{submod}')
-            assert exec(f'{mod}.{submod}') is not False, f'Could not initialize {
-                mod}.{submod}'
+            assert exec(f'{mod}.{submod}') is not False, f'Could not initialize {mod}.{submod}'
 
 
 def test_coverage():
