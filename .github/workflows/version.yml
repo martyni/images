@@ -1,0 +1,27 @@
+name: Increment Minor Version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  increment-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Increment minor version
+        uses: codacy/git-version@v3
+        with:
+          increment: 'minor'
+        
+      - name: Commit and push version increment
+        run: |
+          git config --global user.name $(cat script/AUTHOR)
+          git config --global user.email $(cat script/EMAIL)
+          git add git-version
+          git commit -am "Increment minor version"
+          git push origin main
