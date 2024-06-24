@@ -6,7 +6,7 @@ import sys
 import semantic_version
 
 VERSION_FILE = sys.argv[1]
-INCREMENT_TYPE = sys.argv[2].read().strip().lower()
+INCREMENT_TYPE = sys.argv[2].lower()
 INCREMENT_FUNC = {
     "major": "next_major",
     "minor": "next_minor",
