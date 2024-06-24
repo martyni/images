@@ -26,8 +26,8 @@ jobs:
       run: |
         export VERSION=$(cat git-version)
         export MESSAGE=$(git log -1 --pretty=%B)
-        export AUTHOR=$(cat script/AUTHOR)
-        export AUTHOR_EMAIL=$(cat script/AUTHOR_EMAIL)
+        export AUTHOR=$(cat scripts/AUTHOR)
+        export AUTHOR_EMAIL=$(cat scripts/AUTHOR_EMAIL)
         git config --global user.name ${AUTHOR}
         git config --global user.email ${AUTHOR_EMAIL}
         git add git-version
