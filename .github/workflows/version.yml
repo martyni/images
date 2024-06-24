@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Increment minor version
-      uses: codacy/git-version@v2.8.0
+      uses: codacy/git-version@v2.7.1
       with:
         increment: 'minor'
       
