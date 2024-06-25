@@ -46,7 +46,6 @@ jobs:
         env:
           latest_tag: ${{ steps.latest-tag.outputs.latest_tag  }}
           outcome: ${{ steps.latest-tag.outcome  }}
-          latest-tag: ${{ steps.latest-tag }}
         run:
           env
           echo $latest_tag
