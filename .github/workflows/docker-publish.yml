@@ -5,10 +5,10 @@ name: Docker
 # separate terms of service, privacy policy, and support
 # documentation.
 
- on:
-   workflow_run:
-     workflows: [Version]
-     types: [completed]
+on:
+  workflow_run:
+    workflows: [Version]
+    types: [completed]
 
 env:
   # Use docker.io for Docker Hub if empty
