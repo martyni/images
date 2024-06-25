@@ -40,17 +40,15 @@ jobs:
         id: latest-tag
         run: |
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo $latest_tag
+          echo "latest_tag=${latest_tag} >> "$GITHUB_OUTPUT"
       - name: Get Latest Tag
-        id: test-tag 
+        id: test-tag
         env:
           latest_tag: ${{ steps.latest-tag.outputs.latest_tag  }}
-          outcome: ${{ steps.latest-tag.outcome  }}
         run:
-          env
           echo $latest_tag
-          echo $outcome
-          echo $latest-tag
+
+
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -92,7 +90,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.latest-tag.outputs.latest_tag  }}
+          tags: ${{ steps.latest-tag.outputs.latest_tag }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           platforms: linux/amd64,linux/arm64
