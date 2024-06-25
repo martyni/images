@@ -41,12 +41,15 @@ jobs:
         run: |
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
           echo "latest_tag=${REGISTRY}/${IMAGE_NAME}:${latest_tag}" >> "$GITHUB_OUTPUT"
+          echo "default_tag=${REGISTRY}/${IMAGE_NAME}:latest" >> "$GITHUB_OUTPUT"
       - name: Get Latest Tag
         id: test-tag
         env:
-          latest_tag: ${{ steps.latest-tag.outputs.latest_tag  }}
-        run:
+          latest_tag: ${{ steps.latest-tag.outputs.latest_tag }}
+          default_tag: ${{ steps.latest-tag.outputs.default_tag }}  
+        run: |
           echo $latest_tag
+          echo $default_tag
 
 
 
@@ -85,7 +88,7 @@ jobs:
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        id: build-and-push
+        id: build-and-push-tag
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
@@ -95,6 +98,18 @@ jobs:
           cache-from: type=gha
           platforms: linux/amd64,linux/arm64
           cache-to: type=gha,mode=max
+
+      - name: Build and push Docker image
+        id: build-and-push-default
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.latest-tag.outputs.default_tag }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          platforms: linux/amd64,linux/arm64
+          cache-to: type=gha,mode=max      
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
