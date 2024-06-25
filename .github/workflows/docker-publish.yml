@@ -40,7 +40,6 @@ jobs:
         id: latest-tag
         run: |
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo $latest_tag
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -82,7 +81,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.latest-tag }}
+          tags: ${{ steps.latest-tag.outputs.latest_tag  }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           platforms: linux/amd64,linux/arm64
@@ -97,7 +96,7 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         env:
           # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
-          TAGS: ${{ steps.latest-tag }}
+          TAGS: ${{ steps.latest-tag.outputs.latest_tag }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
