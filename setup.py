@@ -75,7 +75,7 @@ setup(
     # Scripts
     entry_points={
         'console_scripts': [
-            meta_dict['name'] + ' = my_app.app:main'],
+            meta_dict['name'] + ' = webapp.app:main'],
     },
 
     # Other configurations
