@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///items.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unique.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -14,6 +14,7 @@ GOOD_DATA = {
     "mandatory": "<mandatory>",
     "optional": "<optional(optional)>",
 }
+
 
 class Basic(db.Model):  # pylint: disable=too-few-public-methods
     '''Basic class to hold message data'''
@@ -64,7 +65,9 @@ def receive_message():
             'recieved': f'{data}',
             'expected': f'{GOOD_DATA}'}), 400
 
-    new_item = Basic(mandatory=data['mandatory'], optional=data.get('optional'))
+    new_item = Basic(
+        mandatory=data['mandatory'],
+        optional=data.get('optional'))
     db.session.add(new_item)
     db.session.commit()
 

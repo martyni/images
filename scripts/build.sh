@@ -25,7 +25,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=${USER}
-ExecStart=authbind $(which gunicorn) --certfile=/tmp/$DOMAIN.crt --keyfile=/tmp/$DOMAIN.key --bind 0.0.0.0:443 ${NAME}.app:app
+ExecStart=authbind $(which gunicorn) --certfile=/tmp/$DOMAIN.crt.pem --keyfile=/tmp/$DOMAIN.key.pem --bind 0.0.0.0:443 ${NAME}.app:app
 [Install]
 WantedBy=multi-user.target
 EOM

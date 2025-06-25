@@ -1,9 +1,10 @@
-ORIGINAL_DIR=$(pwd)
+#!/bin/bash
+export ORIGINAL_DIR=$(pwd)
 ROOT_PROJECT_DIR=$(git rev-parse --show-toplevel)
 OUTPUT_FILE=/tmp/output
 date> ${OUTPUT_FILE}
 
-cd $ROOT_PROJECT_DIR
+cd $ROOT_PROJECT_DIR || return
 source scripts/common.sh
 
 echo -e ${YELLOW}Running tests from  ${RUN_DIR}${NO_COLOUR}
@@ -57,4 +58,5 @@ test_failed () {
   exit 1
 }
 
-python_install && python_test && linting_test && build_test && run_test && all_tests_pass || test_failed
+python_install && python_test && linting_test && build_test && run_test 
+grep -i fail ${OUTPUT_FILE} && test_failed || all_tests_pass

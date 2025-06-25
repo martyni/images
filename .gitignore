@@ -163,3 +163,4 @@ cython_debug/
 
 #Package stuff
 __meta__.py
+*service
