@@ -9,13 +9,15 @@ else
     export YELLOW='\033[0;33m'
     export NO_COLOUR='\033[0m'
 fi
-
+export ROOT_PROJECT_DIR=$(git rev-parse --show-toplevel) 
 export RUN_DIR=$(realpath $(dirname $0))
 export BUILD_EXIT_FILE=/tmp/build_exit_code
-export BUILD_OUTPUT=/tmp/build_output
+export NAME=$(cat ${RUN_DIR}/NAME)
+export OUTPUT=/tmp/${NAME}_OUTPUT
+export OUTPUT=/tmp/${NAME}_OUTPUT
+export BUILD_OUTPUT=${OUTPUT}_BUILD
 export DOCKER_FLAGS=$(cat ${RUN_DIR}/DOCKER_FLAGS)
 export DOCKER_REPO=$(cat ${RUN_DIR}/DOCKER_REPO)
-export NAME=$(cat ${RUN_DIR}/NAME)
 export FULL_NAME="${DOCKER_REPO}/$(cat ${RUN_DIR}/NAME)"
 export VERSION=$(cat ${RUN_DIR}/VERSION)
 export DESCRIPTION=$(cat ${RUN_DIR}/DESCRIPTION)
@@ -23,7 +25,6 @@ export DOMAIN=$(cat ${RUN_DIR}/DOMAIN)
 export COMMAND="docker run ${DOCKER_FLAGS} ${NAME}:${VERSION}"
 export CONTAINER=$(docker run ${DOCKER_FLAGS} ${DOCKER_REPO}/${NAME}:${VERSION}|| (echo -e "fail to start container\n" >>${OUTPUT}))
 export CURRENT_TEST=None
-export OUT=/tmp/output
 export OLD_VERSION=$(cat ${RUN_DIR}/VERSION)
 export INCREMENT=$(git rev-parse --abbrev-ref HEAD | awk -F "/" '{ print $1}')
 export SEMVER="/usr/bin/semver"

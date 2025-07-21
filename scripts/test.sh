@@ -1,18 +1,17 @@
-#!/bin/bash
+#!/bin/bash -x
 export ORIGINAL_DIR=$(pwd)
-ROOT_PROJECT_DIR=$(git rev-parse --show-toplevel)
-OUTPUT_FILE=/tmp/output
-date> ${OUTPUT_FILE}
 
-cd $ROOT_PROJECT_DIR || return
 source scripts/common.sh
+cd $ROOT_PROJECT_DIR || return
+date> ${OUTPUT}
 
 echo -e ${YELLOW}Running tests from  ${RUN_DIR}${NO_COLOUR}
 
 python_install () {
   CURRENT_TEST=python_install
   echo -e ${YELLOW} Starting Python Install ${NO_COLOUR}
-  pip install .[dev]
+  pwd
+  pip install ".[dev]"
 }
 
 python_test () {
@@ -37,12 +36,12 @@ build_test () {
 run_test () {
   CURRENT_TEST=Run
   echo -e ${YELLOW} Starting Run Test ${NO_COLOUR}
-  ${RUN_DIR}/run.sh | tee $OUTPUT_FILE 
+  ${RUN_DIR}/run.sh | tee $OUTPUT 
   echo -e ${YELLOW} Finished Run Test ${NO_COLOUR}
 }
 
 all_tests_pass () {
-  FAILED=$(grep fail ${OUTPUT_FILE}) 
+  FAILED=$(grep fail ${OUTPUT}) 
   if [ -z ${FAILED} ]; then
   	echo -e ${GREEN} All tests passed ${NO_COLOUR}
   	${RUN_DIR}/increment.sh && ${RUN_DIR}/build.sh && ${RUN_DIR}/install.sh
@@ -54,9 +53,9 @@ all_tests_pass () {
 
 test_failed () {
   echo -e ${RED} ${CURRENT_TEST} test failed ${NO_COLOUR}
-  cat ${OUTPUT_FILE}
+  cat ${OUTPUT}
   exit 1
 }
 
 python_install && python_test && linting_test && build_test && run_test 
-grep -i fail ${OUTPUT_FILE} && test_failed || all_tests_pass
+grep -i fail ${OUTPUT} && test_failed || all_tests_pass

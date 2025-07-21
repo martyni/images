@@ -24,9 +24,11 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
+WorkingDirectory=/home/martyni/repos/images
 User=${USER}
 ExecStart=authbind $(which gunicorn) --certfile=/tmp/$DOMAIN.crt.pem --keyfile=/tmp/$DOMAIN.key.pem --bind 0.0.0.0:443 ${NAME}.app:app
 [Install]
 WantedBy=multi-user.target
 EOM
-exit $(cat ${BUILD_EXIT_FILE})
+cat ${BUILD_OUTPUT} | tee -a ${OUTPUT}
+exit $(cat ${BUILD_EXIT_FILE} )
